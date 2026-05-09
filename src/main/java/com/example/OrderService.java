@@ -21,8 +21,8 @@ public class OrderService {
         // Get customer details - can be null for guest checkouts
         Customer customer = order.getCustomer();
         
-        // Apply loyalty discount if customer has membership
-        double discount = customer.getLoyaltyDiscount();  // LINE 142: NPE if guest checkout (customer is null)
+        // Apply loyalty discount if customer has membership (0.0 for guest checkouts)
+        double discount = (customer != null) ? customer.getLoyaltyDiscount() : 0.0;
         double finalAmount = order.getTotalAmount() - discount;
         
         // Process payment
